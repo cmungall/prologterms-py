@@ -9,6 +9,6 @@ cleandist:
 
 # TODO: manually increment version in python, run . bump.sh, then this
 release: cleandist
-	python setup.py sdist bdist_wheel bdist_egg
+	python setup.py sdist bdist_wheel
 	twine upload dist/*
 
