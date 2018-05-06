@@ -17,6 +17,30 @@ writes::
 
    member(X, [1, 2, 3])
 
+All prolog escaping conventions are handled
+   
+Rules
+=====
+
+The "<=" operator in python is overloaded to mean the same as prolog
+":-". This means a rule object can be created as follows:
+
+::
+   
+   P.ancestor(X,Y) <= (P.parent(X,Z), P.ancestor(Z,Y))
+
+This can be done more explicitly using a Rule constructor:
+
+::
+
+   from prologterm import TermGenerator, PrologRenderer, Var, Rule
+
+   X = Var('X')
+   Y = Var('Y')
+   Z = Var('Z')
+   P = TermGenerator()
+   rule = Rule(P.ancestor(X,Y), (P.parent(X,Z), P.ancestor(Z,Y))
+   
 Usage
 =====
 
@@ -24,6 +48,9 @@ This module is of little use by itself. It is intended to be used to
 generate prolog programs that can be fed into a prolog execution
 engine.
 
+- write prolog programs and queries to a file, and load these using an engine like swi-prolog
+- through web services, e.g. via pengines
+  
 Pengines
 ========
 
