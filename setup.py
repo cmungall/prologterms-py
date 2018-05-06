@@ -1,5 +1,7 @@
 from distutils.core import setup
 
+import prologterms
+
 pt_classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Programming Language :: Python :: 3",
@@ -19,7 +21,7 @@ setup(
     author_email = "cmungall+github@gmail.com",
     url = "https://github.com/cmungall/prologterms",
     license = "BSD3",
-    tests_require = ["pytest"],
+    #tests_require = ["pytest"],
     keywords = ["prolog", "swipl", "swi-prolog", "logic programming", "pengines"],
     classifiers = pt_classifiers,
 )
