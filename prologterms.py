@@ -14,6 +14,9 @@ directly represented by the analogous python structure
 
 import re
 
+__author__ = "Chris Mungall <cjmungall@lbl.gov>"
+__version__ = "0.0.1"
+
 class Program(object):
     """
     A program is a collection of terms
