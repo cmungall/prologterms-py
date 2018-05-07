@@ -2,3 +2,6 @@ venv
 __pycache__
 .pytest_cache/
 prologterms.egg-info/
+dist/
+.ipynb_checkpoints/
+build/
