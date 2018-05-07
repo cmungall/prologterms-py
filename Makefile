@@ -7,7 +7,7 @@ debug_test:
 cleandist:
 	rm dist/* || true
 
-# TODO: manually increment version in python, run . bump.sh, then this
+# TODO: manually increment version in python, run . utils/bump.sh, then this
 release: cleandist
 	python setup.py sdist bdist_wheel
 	twine upload dist/*

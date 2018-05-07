@@ -1,5 +1,3 @@
-|PyPI|
-
 prologterms - a python library for constructing prolog terms
 ============================================================
 
@@ -17,7 +15,9 @@ writes::
 
    member(X, [1, 2, 3])
 
-All prolog escaping conventions are handled
+All prolog escaping conventions are handled automatically.
+
+See the `Jupyter notebook <http://nbviewer.jupyter.org/github/cmungall/prologterms-py/tree/masterPrologTermsExamples.ipynb>`_
    
 Rules
 =====
