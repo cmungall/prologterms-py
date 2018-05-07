@@ -5,7 +5,7 @@ prologterms - a python library for constructing prolog terms
 
 Example::
    
-    from prologterm import TermGenerator, PrologRenderer, Var
+    from prologterms import TermGenerator, PrologRenderer, Var
     
     X = Var('X')
     P = TermGenerator()
@@ -33,7 +33,7 @@ This can be done more explicitly using a Rule constructor:
 
 ::
 
-   from prologterm import TermGenerator, PrologRenderer, Var, Rule
+   from prologterms import TermGenerator, PrologRenderer, Var, Rule
 
    X = Var('X')
    Y = Var('Y')

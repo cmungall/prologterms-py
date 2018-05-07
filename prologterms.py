@@ -15,7 +15,7 @@ directly represented by the analogous python structure
 import re
 
 __author__ = "Chris Mungall <cjmungall@lbl.gov>"
-__version__ = "0.0.2"
+__version__ = "0.0.3"
 
 class Program(object):
     """
