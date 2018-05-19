@@ -7,6 +7,7 @@ debug_test:
 cleandist:
 	rm dist/* || true
 
+# version is in prologterms.py
 # TODO: manually increment version in python, run . utils/bump.sh, then this
 release: cleandist
 	python setup.py sdist bdist_wheel
