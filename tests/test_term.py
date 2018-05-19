@@ -1,20 +1,23 @@
-from prologterms import TermGenerator, PrologRenderer, Program, Var
+from prologterms import TermGenerator, PrologRenderer, Program, Var, SExpressionRenderer
 
 P = TermGenerator()
 X = Var('X')
 Y = Var('Y')
 Z = Var('Z')
 R = PrologRenderer()
+S = SExpressionRenderer()
 
 def test_term():
     t = P.member(X, [1, 2, 3])
     print("TERM: {}\n".format(R.render(t)))
     assert R.render(t) == "member(X, [1, 2, 3])"
+    assert S.render(t) == "(member ?X (list 1 2 3))"
 
 def test_quote():
     t = P.member(X, ['a', 'B', '$c', '.d', '', ' ', "'x'", "foo\n\n'bar'"])
     print("TERM: {}\n".format(R.render(t)))
     assert R.render(t) == "member(X, [a, 'B', '$c', '.d', '', ' ', '\\'x\\'', 'foo\\n\\n\\'bar\\''])"
+    assert S.render(t) == "(member ?X (list a 'B' '$c' '.d' '' ' ' '\\'x\\'' 'foo\\n\\n\\'bar\\''))"
 
 def test_comments():
     t = P.member(X, [1, 2, 3])

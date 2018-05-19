@@ -17,7 +17,7 @@ writes::
 
 All prolog escaping conventions are handled automatically.
 
-See the `Jupyter notebook <http://nbviewer.jupyter.org/github/cmungall/prologterms-py/tree/masterPrologTermsExamples.ipynb>`_
+See the `Jupyter notebook <http://nbviewer.jupyter.org/github/cmungall/prologterms-py/tree/master/PrologTermsExamples.ipynb>`_
    
 Rules
 =====

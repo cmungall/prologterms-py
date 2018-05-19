@@ -87,7 +87,10 @@ class TermGenerator(object):
             return Term(pred, *args)
         return method
 
-class PrologRenderer(object):
+class Renderer(object):
+    pass
+
+class PrologRenderer(Renderer):
     """
     Renders internal prolog term or program representations as strings that can be
     fed directly to a prolog engine
@@ -129,6 +132,48 @@ class PrologRenderer(object):
         # add comments
         if isinstance(t, Term) and len(t.comments) > 0:
             cmt = "".join(['% {}\n'.format(c) for c in t.comments])
+            s = cmt + s
+        return s
+
+class SExpressionRenderer(Renderer):
+    """
+    Renders internal prolog term or program representations as S-Expression strings that can be
+    fed directly to a prolog engine such as kanren
+    """
+    def render(self, t):
+        """
+        Renders a prolog term, program or python structure holding these.
+        """
+        s=""
+        if isinstance(t, Program):
+            s = "{}".format(" ".join([self.render(x) for x in t.terms]))
+        elif isinstance(t, Rule):
+            head = self.render(t.args[0])
+            bodyt = t.args[1]
+            body = ""
+            if isinstance(bodyt, tuple):
+                body = "{}".format(" ".join([self.render(e) for e in bodyt]))
+            else:
+                body = self.render(bodyt)
+            s = "(<= {} {})".format(head, body)
+        elif isinstance(t, Var):
+            s = "?{}".format(t.name)
+        elif isinstance(t, Term):
+            s = "({} {})".format(t.pred, " ".join([self.render(a) for a in t.args]))
+        elif isinstance(t, list):
+            s = "(list {})".format(" ".join([self.render(e) for e in t]))
+        elif isinstance(t, tuple):
+            s = "({})".format(" ".join([self.render(e) for e in t]))
+        elif isinstance(t, str):
+            s = "{}".format(t)
+            if not re.match(r"^[a-z]\w*$", s):
+                s = s.replace("'","\\'").replace("\n","\\n")
+                s = "'{}'".format(s)
+        else:
+            s = "{}".format(t)
+        # add comments
+        if isinstance(t, Term) and len(t.comments) > 0:
+            cmt = "".join(['; {}\n'.format(c) for c in t.comments])
             s = cmt + s
         return s
 
