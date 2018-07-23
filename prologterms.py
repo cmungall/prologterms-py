@@ -40,6 +40,9 @@ class Term(object):
         Terms can be annotated with comments
         """
         self.comments.append(c)
+
+    def __str__(self):
+        return PrologRenderer().render(self)
         
     # override "<=" to mean same as prolog ":-"
     def __le__(self, body):
@@ -49,6 +52,32 @@ class Term(object):
     def __mod__(self, comment):
         self.comments = [comment]
         return self
+    
+    # override * for composition
+    def __mul__(self, right):
+        v = Var('Foo')
+        t1 = Term(self.pred, *(self.args + [v]))
+        t2 = Term(right.pred, *([v] + right.args))
+        return (t1, t2)
+
+    # override <<= for defining chains
+    def __lshift__(self, right):
+        v1 = Var('X')
+        v2 = Var('Y')
+        head = Term(self.pred, *([v1] + self.args + [v2]))
+        if isinstance(right, tuple):
+            bodyl = list(right)
+        else:
+            bodyl = [right]
+        lterm = bodyl[0]
+        rterm = bodyl[-1]
+        if len(bodyl) > 1: 
+            lterm_x = Term(lterm.pred, *([v1] + lterm.args))
+            rterm_x = Term(rterm.pred, *(rterm.args + [v2]))
+            body = tuple([lterm_x] + bodyl[1:-1] + [rterm_x])
+        else:
+            body = (Term(lterm.pred, *([v1] + lterm.args + [v2])))
+        return Rule(head, body)
 
 class Rule(Term):
     """
@@ -66,7 +95,7 @@ class Rule(Term):
         self.pred = ':-'
         self.args = [head, body]
         self.comments = []
-
+        
 class Var(object):
     """
     Represents a prolog variable.

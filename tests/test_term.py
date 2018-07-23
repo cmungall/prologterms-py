@@ -32,6 +32,7 @@ def test_comments_infix():
     print("TERM: {}\n".format(R.render(t)))
     assert R.render(t) == "% foo\nmember(X, [1, 2, 3])"
     
+    
 def test_program():
     p = Program(
         P.ancestor(X,Y) <= (P.parent(X,Z), P.ancestor(Z,Y)),
@@ -54,4 +55,24 @@ def test_program_infix_comments():
     print('PROG:\n')
     print(R.render(p))
     
+def test_chain():
+    p = Program(
+        P.ancestor(X,Y) <= (P.parent(X) * P.ancestor(Y)),
+        P.ancestor(X,Y) <= P.parent(X,Z),
+        P.parent('a','b'),
+        P.parent('b','c'),
+        P.parent('c','d')
+        )
+    print('PROG (chain):\n')
+    print(R.render(p))
     
+def test_chain2():
+    p = Program(
+        P.ancestor() << (P.parent() * P.ancestor()),
+        P.ancestor() << (P.parent()),
+        P.parent('a','b'),
+        P.parent('b','c'),
+        P.parent('c','d')
+        )
+    print('PROG (chain2):\n')
+    print(R.render(p))
