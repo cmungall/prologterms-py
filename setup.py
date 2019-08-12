@@ -21,7 +21,7 @@ setup(
     long_description=open("README.rst").read(),
     author = "Chris Mungall",
     author_email = "cmungall+github@gmail.com",
-    url = "https://github.com/cmungall/prologterms",
+    url = "https://github.com/cmungall/prologterms-py",
     license = "BSD3",
     #tests_require = ["pytest"],
     keywords = ["prolog", "swipl", "swi-prolog", "logic programming", "pengines"],
