@@ -44,11 +44,46 @@ class Term(object):
     # override "<=" to mean same as prolog ":-"
     def __le__(self, body):
         return Rule(self, body)
+
+    def __lt__(self, body):
+        return Term('<', self, body)
+    def __gt__(self, body):
+        return Term('>', self, body)
+    def __ge__(self, body):
+        return Term('>=', self, body)
+    
+    # override "==" to mean same as prolog "="
+    def __eq__(self, body):
+        return Term('=', self, body)
+    
+    # override "!=" to mean same as prolog "\="
+    def __ne__(self, body):
+        return Term('\=', self, body)
+
+    def __sub__(self, body):
+        return Term('-', self, body)
+    def __add__(self, body):
+        return Term('+', self, body)
+    def __mul__(self, body):
+        return Term('*', self, body)
+    def __truediv__(self, body):
+        return Term('/', self, body)
+    def __pow__(self, body):
+        return Term('**', self, body)
     
     # override % for comments
     def __mod__(self, comment):
         self.comments = [comment]
         return self
+
+    # unary
+    def __neg__(self):
+        return Term('-', self)
+
+    # use ~ for NOT
+    def __invert__(self):
+        return Term('\+', self)
+    
 
 class Rule(Term):
     """
@@ -67,7 +102,7 @@ class Rule(Term):
         self.args = [head, body]
         self.comments = []
 
-class Var(object):
+class Var(Term):
     """
     Represents a prolog variable.
     These should use a leading uppercase.
@@ -75,6 +110,7 @@ class Var(object):
     """
     def __init__(self, name):
         self.name = name
+        self.comments = []
 
 class TermGenerator(object):
     """
@@ -117,7 +153,10 @@ class PrologRenderer(Renderer):
         elif isinstance(t, Var):
             s = "{}".format(t.name)
         elif isinstance(t, Term):
-            s = "{}({})".format(t.pred, ", ".join([self.render(a) for a in t.args]))
+            if len(t.args) == 0:
+                s = t.pred
+            else:
+                s = "{}({})".format(t.pred, ", ".join([self.render(a) for a in t.args]))
         elif isinstance(t, list):
             s = "[{}]".format(", ".join([self.render(e) for e in t]))
         elif isinstance(t, tuple):

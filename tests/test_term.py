@@ -13,6 +13,36 @@ def test_term():
     assert R.render(t) == "member(X, [1, 2, 3])"
     assert S.render(t) == "(member ?X (list 1 2 3))"
 
+def test_atom():
+    t = P.foo()
+    print("TERM: {}\n".format(R.render(t)))
+    assert R.render(t) == "foo"
+    assert S.render(t) == "(foo )"
+
+def test_unary_neg():
+    t = (-X)
+    print("TERM: {}\n".format(R.render(t)))
+    assert R.render(t) == "-(X)"
+    assert S.render(t) == "(- ?X)"
+    
+def test_not():
+    t = (~ P.true())
+    print("TERM: {}\n".format(R.render(t)))
+    assert R.render(t) == "\+(true)"
+    assert S.render(t) == "(\+ (true ))"
+    
+def test_eq():
+    t = (X == Y)
+    print("TERM: {}\n".format(R.render(t)))
+    assert R.render(t) == "=(X, Y)"
+    assert S.render(t) == "(= ?X ?Y)"
+
+def test_ne():
+    t = (X != Y)
+    print("TERM: {}\n".format(R.render(t)))
+    assert R.render(t) == "\=(X, Y)"
+    assert S.render(t) == "(\= ?X ?Y)"
+
 def test_quote():
     t = P.member(X, ['a', 'B', '$c', '.d', '', ' ', "'x'", "foo\n\n'bar'"])
     print("TERM: {}\n".format(R.render(t)))
